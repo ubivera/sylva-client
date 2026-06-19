@@ -54,6 +54,29 @@
 !*.svg
 !*.webp
 
+# C# / WinUI shell (Windows) — source + project files
+!*.cs
+!*.xaml
+!*.csproj
+!*.sln
+!*.slnx
+!*.props
+!*.targets
+!*.config
+!*.json
+!*.manifest
+!*.appxmanifest
+!*.pubxml
+!*.resw
+!*.resx
+!*.ico
+!*.xml
+
+# Future: SwiftUI (macOS/iOS) + Kotlin (Android) shells — allowlist their source +
+# project files when those land (e.g. *.swift, *.plist, *.pbxproj, *.entitlements,
+# *.kt, *.kts, *.gradle, *.pro, plus the specific binaries gradlew /
+# gradle/wrapper/gradle-wrapper.jar / gradle-wrapper.properties).
+
 # ─── Step 4: re-ignore noise that the allowlist would otherwise let through ───
 # These run last so they override anything matched above.
 
@@ -63,6 +86,17 @@ target/
 *.swp
 *.swo
 *~
+
+# .NET / Visual Studio / WinUI build output. `!*/` descends into these dirs and the
+# allowlist above would otherwise track generated .cs/.json/.png inside them, so
+# re-ignore the whole dirs (files under an ignored dir can't be re-included).
+bin/
+obj/
+.vs/
+Generated Files/
+AppPackages/
+BundleArtifacts/
+*.user
 
 # OS junk
 .DS_Store
