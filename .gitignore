@@ -1,0 +1,116 @@
+# Whitelist .gitignore: ignore everything by default, explicitly allow only the files
+# that belong in the repo. When you add a new file type, add it to the allowlist below.
+
+# ─── Step 1: ignore everything ────────────────────────────────────────────────
+*
+
+# ─── Step 2: allow git to descend into directories ────────────────────────────
+# Without these, git won't look inside subdirectories at all, and the allowlist
+# below can never match nested files.
+!*/
+!.github/
+
+# ─── Step 3: allowlist (essential file types and specific filenames) ──────────
+
+# Repo metadata
+!.gitignore
+!.gitattributes
+!.editorconfig
+
+# Project / build configuration
+!*.toml
+!*.lock
+
+# Documentation and license
+!*.md
+!LICENSE
+!LICENSE.*
+
+# Source
+!*.rs
+
+# Web assets — hand-written stylesheet (vendored JS is fetched, not committed)
+!*.css
+
+# Future: gRPC proto sources
+!*.proto
+
+# Future: sqlx migrations
+!*.sql
+
+# Future: CI workflows
+!*.yml
+!*.yaml
+
+# Future: WiX MSI installer sources
+!*.wxs
+!*.wxi
+!*.wxl
+
+# Future: static assets shipped with the repo (logos, diagrams)
+!*.png
+!*.jpg
+!*.jpeg
+!*.svg
+!*.webp
+
+# C# / WinUI shell (Windows) — source + project files
+!*.cs
+!*.xaml
+!*.csproj
+!*.sln
+!*.slnx
+!*.props
+!*.targets
+!*.config
+!*.json
+!*.manifest
+!*.appxmanifest
+!*.pubxml
+!*.resw
+!*.resx
+!*.ico
+!*.xml
+
+# Future: SwiftUI (macOS/iOS) + Kotlin (Android) shells — allowlist their source +
+# project files when those land (e.g. *.swift, *.plist, *.pbxproj, *.entitlements,
+# *.kt, *.kts, *.gradle, *.pro, plus the specific binaries gradlew /
+# gradle/wrapper/gradle-wrapper.jar / gradle-wrapper.properties).
+
+# ─── Step 4: re-ignore noise that the allowlist would otherwise let through ───
+# These run last so they override anything matched above.
+
+# Rust build artifacts
+target/
+*.pdb
+*.swp
+*.swo
+*~
+
+# .NET / Visual Studio / WinUI build output. `!*/` descends into these dirs and the
+# allowlist above would otherwise track generated .cs/.json/.png inside them, so
+# re-ignore the whole dirs (files under an ignored dir can't be re-included).
+bin/
+obj/
+.vs/
+Generated Files/
+AppPackages/
+BundleArtifacts/
+*.user
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Local config / secrets (overrides !*.toml for the *.local.toml case)
+.env
+.env.*
+*.local.toml
+/secrets/
+
+# Runtime artifacts (future checkpoints)
+/data/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
