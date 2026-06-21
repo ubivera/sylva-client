@@ -16,7 +16,7 @@
   <mp:PhoneIdentity PhoneProductId="bb618f56-db50-4287-938c-f8809c045a32" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>windows</DisplayName>
+    <DisplayName>Sylva Hub</DisplayName>
     <PublisherDisplayName>User</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="windows"
-        Description="windows"
+        DisplayName="Sylva Hub"
+        Description="Sylva Hub — sign in and enroll this device."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
