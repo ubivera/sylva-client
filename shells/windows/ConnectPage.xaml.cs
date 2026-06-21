@@ -90,5 +90,8 @@ namespace Ubivera.Sylva.Client
                 "This server's identity doesn't match the key pinned earlier — possible reinstall or interception. Refusing to connect.",
             _ => "Couldn't connect to the server.",
         };
+
+        private void OnSignInClick(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(SignInPage));
+        private void OnCreateOwnerClick(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(CreateOwnerPage));
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Ubivera.Sylva.Client.SignInPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ubivera.Sylva.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="32">
+        <StackPanel Spacing="16" MaxWidth="460" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Sign in" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock Text="Sign in to your Sylva account on this server."
+                       TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+            <StackPanel x:Name="FormPanel" Spacing="16">
+                <TextBox x:Name="EmailBox" Header="Email" />
+                <PasswordBox x:Name="PasswordBox" Header="Password" />
+                <TextBox x:Name="SecretKeyBox" Header="Secret Key"
+                         PlaceholderText="From your other device — leave blank to use this device's saved key" />
+                <Button x:Name="SubmitButton" Content="Sign in" Style="{StaticResource AccentButtonStyle}"
+                        Click="OnSignInClick" HorizontalAlignment="Stretch" />
+                <ProgressRing x:Name="Busy" IsActive="False" HorizontalAlignment="Center" />
+                <InfoBar x:Name="ErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
+            </StackPanel>
+
+            <InfoBar x:Name="SuccessBar" Severity="Success" IsOpen="False" IsClosable="False" Title="Signed in" />
+        </StackPanel>
+    </Grid>
+</Page>
