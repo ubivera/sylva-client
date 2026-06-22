@@ -757,6 +757,10 @@ static class _UniFFILib {
     
     
     
+    
+    
+    
+    
 
     static _UniFFILib() {
         _UniFFILib.uniffiCheckContractApiVersion();
@@ -789,7 +793,15 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_forget_server(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_list_devices(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_restore(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1041,7 +1053,15 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_forget_server(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_restore(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1093,9 +1113,21 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_forget_server();
+            if (checksum != 20078) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_forget_server` checksum `20078`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices();
             if (checksum != 36386) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices` checksum `36386`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_restore();
+            if (checksum != 30185) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_restore` checksum `30185`, library returned `{checksum}`");
             }
         }
         {
@@ -1112,8 +1144,8 @@ static class _UniFFILib {
         }
         {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out();
-            if (checksum != 118) {
-                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out` checksum `118`, library returned `{checksum}`");
+            if (checksum != 6896) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out` checksum `6896`, library returned `{checksum}`");
             }
         }
         {
@@ -1252,10 +1284,22 @@ internal interface ISylvaClient {
     /// <exception cref="ClientException"></exception>
     DeviceInfo EnrollThisDevice(string @label);
     /// <summary>
+    /// Forget this server entirely — full wipe; re-enroll (Secret Key) to return
+    /// (see [`Client::forget_server`]).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    void ForgetServer();
+    /// <summary>
     /// This account's active devices.
     /// </summary>
     /// <exception cref="ClientException"></exception>
     List<DeviceInfo> ListDevices();
+    /// <summary>
+    /// Auto-resume a prior session on launch (see [`Client::restore`]). Returns the
+    /// user id if resumed, else `None` (the shell then shows Connect).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    string? Restore();
     /// <summary>
     /// Revoke one of this account's devices.
     /// </summary>
@@ -1268,7 +1312,8 @@ internal interface ISylvaClient {
     /// <exception cref="ClientException"></exception>
     SignInOutcome SignIn(string @email, string @password, string? @secretKey);
     /// <summary>
-    /// Sign out: wipe the keychain + drop in-memory secrets.
+    /// Sign out of the active session, keeping this device enrolled (see
+    /// [`Client::sign_out`]). A return needs only the password.
     /// </summary>
     /// <exception cref="ClientException"></exception>
     void SignOut();
@@ -1412,6 +1457,20 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     
     
     /// <summary>
+    /// Forget this server entirely — full wipe; re-enroll (Secret Key) to return
+    /// (see [`Client::forget_server`]).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public void ForgetServer() {
+        CallWithPointer(thisPtr =>
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_forget_server(thisPtr,  ref _status)
+));
+    }
+    
+    
+    
+    /// <summary>
     /// This account's active devices.
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1419,6 +1478,19 @@ internal class SylvaClient : ISylvaClient, IDisposable {
         return CallWithPointer(thisPtr => FfiConverterSequenceTypeDeviceInfo.INSTANCE.Lift(
     _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
     _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_list_devices(thisPtr,  ref _status)
+)));
+    }
+    
+    
+    /// <summary>
+    /// Auto-resume a prior session on launch (see [`Client::restore`]). Returns the
+    /// user id if resumed, else `None` (the shell then shows Connect).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public string? Restore() {
+        return CallWithPointer(thisPtr => FfiConverterOptionalString.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_restore(thisPtr,  ref _status)
 )));
     }
     
@@ -1450,7 +1522,8 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     
     
     /// <summary>
-    /// Sign out: wipe the keychain + drop in-memory secrets.
+    /// Sign out of the active session, keeping this device enrolled (see
+    /// [`Client::sign_out`]). A return needs only the password.
     /// </summary>
     /// <exception cref="ClientException"></exception>
     public void SignOut() {

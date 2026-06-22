@@ -13,6 +13,11 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <!-- Slice-1 flow navigates here: Connect -> (create-owner | sign-in) -> name-device -> my-devices. -->
-    <Frame x:Name="RootFrame" />
+    <!-- Slice-1 flow navigates here: Connect -> (create-owner | sign-in) -> name-device -> my-devices.
+         Splash shows while we try to resume a cached session on launch. -->
+    <Grid>
+        <Frame x:Name="RootFrame" />
+        <ProgressRing x:Name="Splash" IsActive="True" Width="48" Height="48"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </Grid>
 </Window>

@@ -12,7 +12,8 @@ namespace Ubivera.Sylva.Client
 
     /// <summary>
     /// This account's devices — list, revoke, sign out. The end of slice 1.
-    /// Sign-out wipes the keychain (also the "forget this server" reset).
+    /// Sign out keeps the device enrolled (return with just a password); "Forget
+    /// this server" is the full wipe / reset.
     /// </summary>
     public sealed partial class MyDevicesPage : Page
     {
@@ -54,6 +55,25 @@ namespace Ubivera.Sylva.Client
         {
             try { await Task.Run(() => App.Client.SignOut()); }
             catch { /* best effort — we're clearing local state and leaving anyway */ }
+            Frame.Navigate(typeof(ConnectPage));
+        }
+
+        private async void OnForgetClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ContentDialog
+            {
+                XamlRoot = XamlRoot,
+                Title = "Forget this server?",
+                Content = "This removes the account and server from this device. "
+                    + "You'll need your Secret Key to sign in again.",
+                PrimaryButtonText = "Forget",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Close,
+            };
+            if (await dialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+            try { await Task.Run(() => App.Client.ForgetServer()); }
+            catch { /* best effort — we're wiping local state and leaving anyway */ }
             Frame.Navigate(typeof(ConnectPage));
         }
 
