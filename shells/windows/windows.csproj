@@ -3,7 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>windows</RootNamespace>
+    <RootNamespace>Ubivera.Sylva.Client</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
@@ -12,6 +12,8 @@
     <WinUISDKReferences>false</WinUISDKReferences>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
+    <!-- The generated uniffi C# bindings (sylva_sdk.cs) use unsafe P/Invoke marshaling. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +41,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1839" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
+  </ItemGroup>
+
+  <!-- sylva-sdk uniffi C# bindings. The generated types are `internal`, so the .cs
+       compiles INTO this assembly; the native lib is copied next to the app so the
+       P/Invoke resolves at runtime. Regenerate via the gen-bindings cargo bin. -->
+  <ItemGroup>
+    <Compile Include="..\..\bindings\csharp\sylva_sdk.cs" Link="Bindings\sylva_sdk.cs" />
+    <Content Include="..\..\bindings\csharp\sylva_sdk.dll" Link="sylva_sdk.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <!--

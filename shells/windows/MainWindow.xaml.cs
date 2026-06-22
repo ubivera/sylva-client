@@ -1,31 +1,28 @@
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace windows
+namespace Ubivera.Sylva.Client
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// The app's single window. Hosts a <see cref="Frame"/> the slice-1 flow
+    /// navigates through. On launch it tries to resume a cached session
+    /// (already-enrolled -> My devices); otherwise it opens on Connect.
     /// </summary>
     public sealed partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            _ = StartAsync();
+        }
+
+        private async Task StartAsync()
+        {
+            string? userId = null;
+            try { userId = await Task.Run(() => App.Client.Restore()); }
+            catch { /* couldn't resume (offline, identity changed, nothing cached) -> Connect */ }
+            Splash.Visibility = Visibility.Collapsed;
+            RootFrame.Navigate(userId != null ? typeof(MyDevicesPage) : typeof(ConnectPage));
         }
     }
 }

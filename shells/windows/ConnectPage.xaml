@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Ubivera.Sylva.Client.ConnectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ubivera.Sylva.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="32">
+        <StackPanel Spacing="16" MaxWidth="460" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Connect to a Sylva server" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock
+                Text="Enter the address of your Sylva server. On first contact, its identity key is pinned to this device — verify the fingerprint matches your server."
+                TextWrapping="Wrap"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+            <TextBox x:Name="HostBox" Header="Server host"
+                     PlaceholderText="e.g. 192.168.1.10 or sylva.example.com" />
+            <NumberBox x:Name="PortBox" Header="Discovery port" Value="8443"
+                       Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" />
+
+            <Button x:Name="ConnectButton" Content="Connect"
+                    Style="{StaticResource AccentButtonStyle}"
+                    Click="OnConnectClick" HorizontalAlignment="Stretch" />
+
+            <ProgressRing x:Name="Busy" IsActive="False" HorizontalAlignment="Center" />
+
+            <InfoBar x:Name="ErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
+
+            <Border x:Name="ResultPanel" Visibility="Collapsed"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                    CornerRadius="8" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Name="TrustText" FontWeight="SemiBold" TextWrapping="Wrap" />
+                    <TextBlock x:Name="ServerNameText" TextWrapping="Wrap" />
+                    <TextBlock Text="Identity fingerprint"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <TextBlock x:Name="FingerprintText" FontFamily="Consolas" TextWrapping="Wrap"
+                               IsTextSelectionEnabled="True" />
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                        <Button Content="Sign in" Style="{StaticResource AccentButtonStyle}" Click="OnSignInClick" />
+                        <Button Content="Create the first owner" Click="OnCreateOwnerClick" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Page>

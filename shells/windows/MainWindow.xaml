@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window
-    x:Class="windows.MainWindow"
+    x:Class="Ubivera.Sylva.Client.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:windows"
+    xmlns:local="using:Ubivera.Sylva.Client"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="windows">
+    Title="Sylva Hub">
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
+    <!-- Slice-1 flow navigates here: Connect -> (create-owner | sign-in) -> name-device -> my-devices.
+         Splash shows while we try to resume a cached session on launch. -->
     <Grid>
-
+        <Frame x:Name="RootFrame" />
+        <ProgressRing x:Name="Splash" IsActive="True" Width="48" Height="48"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </Window>

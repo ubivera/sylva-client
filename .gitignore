@@ -98,6 +98,11 @@ AppPackages/
 BundleArtifacts/
 *.user
 
+# Generated uniffi bindings — reproduced by `cargo run --bin gen-bindings` from
+# sylva-sdk, so not committed. Explicit path beats the `!*.cs` allowlist above;
+# the .dll + future swift/kotlin output fall to the base `*` ignore on their own.
+bindings/csharp/sylva_sdk.cs
+
 # OS junk
 .DS_Store
 Thumbs.db

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Ubivera.Sylva.Client.CreateOwnerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ubivera.Sylva.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="32">
+        <StackPanel Spacing="16" MaxWidth="460" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Create the first owner" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock Text="Creates the first account on a brand-new server and makes you its owner."
+                       TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+            <StackPanel x:Name="FormPanel" Spacing="16">
+                <TextBox x:Name="EmailBox" Header="Email" />
+                <TextBox x:Name="DisplayNameBox" Header="Display name" />
+                <PasswordBox x:Name="PasswordBox" Header="Password" />
+                <TextBox x:Name="DeviceLabelBox" Header="This device's name" />
+                <Button x:Name="SubmitButton" Content="Create owner" Style="{StaticResource AccentButtonStyle}"
+                        Click="OnCreateClick" HorizontalAlignment="Stretch" />
+                <ProgressRing x:Name="Busy" IsActive="False" HorizontalAlignment="Center" />
+                <InfoBar x:Name="ErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
+            </StackPanel>
+
+            <!-- Secret Key: shown ONCE, never recoverable. Gate Continue behind an explicit ack. -->
+            <StackPanel x:Name="SecretPanel" Spacing="12" Visibility="Collapsed">
+                <InfoBar Severity="Warning" IsOpen="True" IsClosable="False"
+                         Title="Save your Secret Key now"
+                         Message="Store it in a password manager or write it down. It is shown once and cannot be recovered — without it you can't sign in on a new device." />
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                        CornerRadius="8" Padding="16">
+                    <TextBlock x:Name="SecretKeyText" FontFamily="Consolas" FontSize="16"
+                               TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                </Border>
+                <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <Button Content="Copy" Click="OnCopyClick" />
+                    <CheckBox x:Name="SavedCheck" Content="I've saved my Secret Key"
+                              Checked="OnSavedToggled" Unchecked="OnSavedToggled" />
+                </StackPanel>
+                <Button x:Name="ContinueButton" Content="Continue" Style="{StaticResource AccentButtonStyle}"
+                        IsEnabled="False" Click="OnContinueClick" HorizontalAlignment="Stretch" />
+            </StackPanel>
+
+            <InfoBar x:Name="SuccessBar" Severity="Success" IsOpen="False" IsClosable="False" Title="Owner created" />
+        </StackPanel>
+    </Grid>
+</Page>
