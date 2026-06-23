@@ -13,6 +13,13 @@ namespace Ubivera.Sylva.Client
         public MainWindow()
         {
             InitializeComponent();
+
+            // Mica through a custom, extended title bar (the AppTitleBar row) — the
+            // PC-Manager look. Caption buttons stay system-drawn on the right.
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(AppTitleBar);
+            AppWindow.Resize(new Windows.Graphics.SizeInt32(930, 540));
+
             App.RootNavFrame = RootFrame;
             _ = StartAsync();
         }

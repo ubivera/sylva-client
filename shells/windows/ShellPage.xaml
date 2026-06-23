@@ -8,25 +8,50 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <!-- The signed-in shell: a left nav over a content frame. Account-lifecycle
-         actions (sign out / forget) live on the Account page. -->
+    <!-- The signed-in shell: a left nav over a content frame. -->
+    <!-- LeftCompact = an icon rail by default; the hamburger expands it to an
+         overlay over the content (Apple Music style), and we collapse it again
+         after a page is chosen (see code-behind). The pane footer carries the
+         current identity (avatar + name); its flyout holds the session actions
+         (sign out / forget) — also Apple Music style. -->
     <NavigationView
         x:Name="Nav"
         IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False"
-        PaneDisplayMode="Left"
+        PaneDisplayMode="LeftCompact"
         SelectionChanged="OnNavSelectionChanged">
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Home" Tag="home">
-                <NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></NavigationViewItem.Icon>
+            <NavigationViewItem Content="Account" Tag="account">
+                <NavigationViewItem.Icon><SymbolIcon Symbol="Contact" /></NavigationViewItem.Icon>
             </NavigationViewItem>
             <NavigationViewItem Content="Devices" Tag="devices">
                 <NavigationViewItem.Icon><SymbolIcon Symbol="CellPhone" /></NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Account" Tag="account">
-                <NavigationViewItem.Icon><SymbolIcon Symbol="Contact" /></NavigationViewItem.Icon>
-            </NavigationViewItem>
         </NavigationView.MenuItems>
+        <NavigationView.PaneFooter>
+            <!-- Collapsed rail shows just the avatar; expanded shows avatar + name.
+                 Click opens a flyout with the session actions. -->
+            <!-- Layout (width / alignment / name visibility) is switched between the
+                 collapsed rail and the expanded pane in code-behind (UpdateFooterPane). -->
+            <Button x:Name="AccountButton" Background="Transparent" BorderThickness="0"
+                    HorizontalAlignment="Left" HorizontalContentAlignment="Center" Width="48" Padding="0,8">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <PersonPicture x:Name="FooterAvatar" Width="24" Height="24" />
+                    <TextBlock x:Name="FooterName" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                               Visibility="Collapsed" />
+                </StackPanel>
+                <Button.Flyout>
+                    <MenuFlyout Placement="Top">
+                        <MenuFlyoutItem Text="Sign out" Click="OnSignOutClick">
+                            <MenuFlyoutItem.Icon><SymbolIcon Symbol="BlockContact" /></MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Forget this server" Click="OnForgetClick">
+                            <MenuFlyoutItem.Icon><SymbolIcon Symbol="Delete" /></MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </NavigationView.PaneFooter>
         <Frame x:Name="ContentFrame" />
     </NavigationView>
 </Page>
