@@ -57,7 +57,7 @@ namespace Ubivera.Sylva.Client
             => ContinueButton.IsEnabled = SavedCheck.IsChecked == true;
 
         private void OnContinueClick(object sender, RoutedEventArgs e)
-            => Frame.Navigate(typeof(MyDevicesPage));
+            => Frame.Navigate(typeof(ShellPage));
 
         private void ShowError(string message)
         {

@@ -13,6 +13,7 @@ namespace Ubivera.Sylva.Client
         public MainWindow()
         {
             InitializeComponent();
+            App.RootNavFrame = RootFrame;
             _ = StartAsync();
         }
 
@@ -22,7 +23,7 @@ namespace Ubivera.Sylva.Client
             try { userId = await Task.Run(() => App.Client.Restore()); }
             catch { /* couldn't resume (offline, identity changed, nothing cached) -> Connect */ }
             Splash.Visibility = Visibility.Collapsed;
-            RootFrame.Navigate(userId != null ? typeof(MyDevicesPage) : typeof(ConnectPage));
+            RootFrame.Navigate(userId != null ? typeof(ShellPage) : typeof(ConnectPage));
         }
     }
 }

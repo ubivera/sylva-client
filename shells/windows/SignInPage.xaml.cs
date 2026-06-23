@@ -36,7 +36,7 @@ namespace Ubivera.Sylva.Client
                 var outcome = await Task.Run(() => App.Client.SignIn(email, password, secretKey));
                 if (outcome is SignInOutcome.Success)
                 {
-                    Frame.Navigate(typeof(MyDevicesPage));
+                    Frame.Navigate(typeof(ShellPage));
                 }
                 else // MfaRequired — the only other variant
                 {

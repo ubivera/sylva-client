@@ -20,6 +20,24 @@ namespace Ubivera.Sylva.Client
 
         private async void OnConnectClick(object sender, RoutedEventArgs e)
         {
+            ForgetButton.Visibility = Visibility.Collapsed;
+            await DoConnect();
+        }
+
+        /// Drop the stale TOFU pin (+ any cached account state for it) so a
+        /// legitimately-changed server can re-pin, then reconnect. Shown only after
+        /// an identity mismatch — the recovery path when sign-in (where "forget"
+        /// otherwise lives) isn't reachable yet.
+        private async void OnForgetAndReconnectClick(object sender, RoutedEventArgs e)
+        {
+            ForgetButton.Visibility = Visibility.Collapsed;
+            try { await Task.Run(() => App.Client.ForgetServer()); }
+            catch { /* best effort — we're clearing the stale pin anyway */ }
+            await DoConnect();
+        }
+
+        private async Task DoConnect()
+        {
             var host = HostBox.Text.Trim();
             if (string.IsNullOrWhiteSpace(host))
             {
@@ -48,6 +66,12 @@ namespace Ubivera.Sylva.Client
             catch (ClientException ex)
             {
                 ShowError(Describe(ex));
+                // A changed identity can't be recovered from here without dropping
+                // the pin — offer that explicitly rather than leaving the user stuck.
+                if (ex is ClientException.IdentityMismatch)
+                {
+                    ForgetButton.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception ex)
             {
@@ -87,7 +111,8 @@ namespace Ubivera.Sylva.Client
             ClientException.Connect =>
                 "Couldn't reach or verify that server. Check the host and port, and that the server is running.",
             ClientException.IdentityMismatch =>
-                "This server's identity doesn't match the key pinned earlier — possible reinstall or interception. Refusing to connect.",
+                "This server's identity doesn't match the key pinned earlier — possible reinstall or interception. "
+                + "If you reset this server on purpose, use \"Forget pinned server & reconnect\" below.",
             _ => "Couldn't connect to the server.",
         };
 
