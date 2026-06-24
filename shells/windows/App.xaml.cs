@@ -1,4 +1,6 @@
+using System;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using uniffi.sylva_sdk;
 
 namespace Ubivera.Sylva.Client
@@ -14,6 +16,20 @@ namespace Ubivera.Sylva.Client
         /// service name below, scoped to the current OS user.
         /// </summary>
         internal static SylvaClient Client { get; private set; } = null!;
+
+        /// <summary>The window's root navigation frame, so shell pages can exit to
+        /// Connect on sign-out / forget. Set by <see cref="MainWindow"/>.</summary>
+        internal static Frame? RootNavFrame { get; set; }
+
+        /// <summary>The main window's HWND, needed to parent WinRT pickers (e.g. the
+        /// avatar file picker) in a packaged desktop app. Set by <see cref="MainWindow"/>.</summary>
+        internal static nint MainWindowHandle { get; set; }
+
+        /// <summary>Raised after the avatar changes so persistent chrome (the nav
+        /// footer avatar) can refresh without a reload.</summary>
+        internal static event Action? AvatarChanged;
+
+        internal static void NotifyAvatarChanged() => AvatarChanged?.Invoke();
 
         private Window? _window;
 

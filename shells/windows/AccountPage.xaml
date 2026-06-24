@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Ubivera.Sylva.Client.AccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ubivera.Sylva.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <!-- Centered column: fills up to 1000px, then shrinks with a 32px side
+             gutter on narrower windows. The Grid centers the max-width StackPanel
+             (a StackPanel can't both cap its width and stretch its children). -->
+        <Grid Padding="32,20,32,32">
+            <StackPanel Spacing="14" MaxWidth="1000">
+
+            <!-- Profile header (the old Home, merged in) -->
+            <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,4">
+                <PersonPicture x:Name="Avatar" Width="72" Height="72" />
+                <StackPanel VerticalAlignment="Center" Spacing="2">
+                    <TextBlock x:Name="NameText" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock x:Name="EmailText" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </StackPanel>
+
+            <InfoBar x:Name="StatusBar" IsOpen="False" IsClosable="True" />
+
+            <!-- Avatar -->
+            <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="14">
+                        <FontIcon Glyph="&#xE77B;" />
+                        <TextBlock Text="Avatar" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Expander.Header>
+                <StackPanel Spacing="8">
+                    <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Upload a photo (PNG, JPEG, or WebP). It's cropped to a square, resized to 512×512, and encrypted on this device before it's stored — the server never sees it." />
+                    <Button x:Name="ChoosePhotoButton" Content="Choose photo…" Click="OnChoosePhotoClick" />
+                </StackPanel>
+            </Expander>
+
+            <!-- Display name -->
+            <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="14">
+                        <FontIcon Glyph="&#xE8AC;" />
+                        <TextBlock Text="Display name" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Expander.Header>
+                <StackPanel Spacing="8">
+                    <TextBox x:Name="DisplayNameBox" Header="Your name" />
+                    <Button x:Name="SaveNameButton" Content="Save name" Click="OnSaveNameClick" />
+                </StackPanel>
+            </Expander>
+
+            <!-- Email -->
+            <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="14">
+                        <FontIcon Glyph="&#xE715;" />
+                        <TextBlock Text="Email" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Expander.Header>
+                <StackPanel Spacing="8">
+                    <TextBlock x:Name="CurrentEmailText" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <TextBox x:Name="NewEmailBox" Header="New email" />
+                    <PasswordBox x:Name="EmailPasswordBox" Header="Current password (to confirm)" />
+                    <Button x:Name="ChangeEmailButton" Content="Change email" Click="OnChangeEmailClick" />
+                </StackPanel>
+            </Expander>
+
+            <!-- Password -->
+            <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="14">
+                        <FontIcon Glyph="&#xE72E;" />
+                        <TextBlock Text="Password" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Expander.Header>
+                <StackPanel Spacing="8">
+                    <PasswordBox x:Name="CurrentPwBox" Header="Current password" />
+                    <PasswordBox x:Name="NewPwBox" Header="New password" />
+                    <PasswordBox x:Name="ConfirmPwBox" Header="Confirm new password" />
+                    <Button x:Name="ChangePwButton" Content="Change password" Click="OnChangePasswordClick" />
+                </StackPanel>
+            </Expander>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

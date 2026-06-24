@@ -13,6 +13,15 @@ namespace Ubivera.Sylva.Client
         public MainWindow()
         {
             InitializeComponent();
+
+            // Mica through a custom, extended title bar (the AppTitleBar row) — the
+            // PC-Manager look. Caption buttons stay system-drawn on the right.
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(AppTitleBar);
+            AppWindow.Resize(new Windows.Graphics.SizeInt32(930, 540));
+
+            App.RootNavFrame = RootFrame;
+            App.MainWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
             _ = StartAsync();
         }
 
@@ -22,7 +31,7 @@ namespace Ubivera.Sylva.Client
             try { userId = await Task.Run(() => App.Client.Restore()); }
             catch { /* couldn't resume (offline, identity changed, nothing cached) -> Connect */ }
             Splash.Visibility = Visibility.Collapsed;
-            RootFrame.Navigate(userId != null ? typeof(MyDevicesPage) : typeof(ConnectPage));
+            RootFrame.Navigate(userId != null ? typeof(ShellPage) : typeof(ConnectPage));
         }
     }
 }

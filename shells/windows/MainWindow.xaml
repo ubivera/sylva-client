@@ -13,11 +13,21 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <!-- Slice-1 flow navigates here: Connect -> (create-owner | sign-in) -> name-device -> my-devices.
-         Splash shows while we try to resume a cached session on launch. -->
-    <Grid>
-        <Frame x:Name="RootFrame" />
-        <ProgressRing x:Name="Splash" IsActive="True" Width="48" Height="48"
-                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <!-- Mica shows through the whole window, including the custom title bar
+         (extended in code-behind). Row 0 is the draggable title bar; row 1 hosts
+         the navigation frame + the launch splash. -->
+    <Grid RowDefinitions="Auto,*">
+        <Grid x:Name="AppTitleBar" Grid.Row="0" Height="40" ColumnDefinitions="Auto,Auto">
+            <Image Grid.Column="0" Source="ms-appx:///Assets/Square44x44Logo.scale-200.png"
+                   Width="18" Height="18" Margin="14,0,0,0" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1" Text="Sylva Hub" Margin="10,0,0,0" VerticalAlignment="Center"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Frame x:Name="RootFrame" />
+            <ProgressRing x:Name="Splash" IsActive="True" Width="48" Height="48"
+                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </Window>

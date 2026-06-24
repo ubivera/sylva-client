@@ -761,6 +761,18 @@ static class _UniFFILib {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     static _UniFFILib() {
         _UniFFILib.uniffiCheckContractApiVersion();
@@ -781,6 +793,10 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_change_password(IntPtr @ptr,RustBuffer @currentPassword,RustBuffer @newPassword,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_connect(IntPtr @ptr,RustBuffer @host,ushort @discoveryPort,ref UniffiRustCallStatus _uniffi_out_err
     );
 
@@ -797,6 +813,14 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_get_avatar(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_get_profile(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_list_devices(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
@@ -809,11 +833,23 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_set_avatar(IntPtr @ptr,RustBuffer @avatar,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_sign_in(IntPtr @ptr,RustBuffer @email,RustBuffer @password,RustBuffer @secretKey,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_sign_out(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_update_display_name(IntPtr @ptr,RustBuffer @displayName,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_update_email(IntPtr @ptr,RustBuffer @newEmail,RustBuffer @currentPassword,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1041,6 +1077,10 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_change_password(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_connect(
     );
 
@@ -1057,6 +1097,14 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_get_avatar(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_get_profile(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices(
     );
 
@@ -1069,11 +1117,23 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_set_avatar(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_sign_in(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_update_display_name(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_update_email(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1094,6 +1154,12 @@ static class _UniFFILib {
     }
 
     static void uniffiCheckApiChecksums() {
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_change_password();
+            if (checksum != 31578) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_change_password` checksum `31578`, library returned `{checksum}`");
+            }
+        }
         {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_connect();
             if (checksum != 16991) {
@@ -1119,6 +1185,18 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_get_avatar();
+            if (checksum != 16069) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_get_avatar` checksum `16069`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_get_profile();
+            if (checksum != 28695) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_get_profile` checksum `28695`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices();
             if (checksum != 36386) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices` checksum `36386`, library returned `{checksum}`");
@@ -1137,6 +1215,12 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_set_avatar();
+            if (checksum != 23085) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_set_avatar` checksum `23085`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_sign_in();
             if (checksum != 1315) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_sign_in` checksum `1315`, library returned `{checksum}`");
@@ -1146,6 +1230,18 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out();
             if (checksum != 6896) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out` checksum `6896`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_update_display_name();
+            if (checksum != 45517) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_update_display_name` checksum `45517`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_update_email();
+            if (checksum != 18508) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_update_email` checksum `18508`, library returned `{checksum}`");
             }
         }
         {
@@ -1263,11 +1359,37 @@ class FfiConverterString: FfiConverter<string, RustBuffer> {
 
 
 
+
+class FfiConverterByteArray: FfiConverterRustBuffer<byte[]> {
+    public static FfiConverterByteArray INSTANCE = new FfiConverterByteArray();
+
+    public override byte[] Read(BigEndianStream stream) {
+        var length = stream.ReadInt();
+        return stream.ReadBytes(length);
+    }
+
+    public override int AllocationSize(byte[] value) {
+        return 4 + value.Length;
+    }
+
+    public override void Write(byte[] value, BigEndianStream stream) {
+        stream.WriteInt(value.Length);
+        stream.WriteBytes(value);
+    }
+}
+
+
+
 /// <summary>
 /// The shell-facing handle: a blocking wrapper over the async [`Client`] facade
 /// with its own runtime. Held for the app's lifetime.
 /// </summary>
 internal interface ISylvaClient {
+    /// <summary>
+    /// Change this account's password (local re-wrap + server verifier update).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    void ChangePassword(string @currentPassword, string @newPassword);
     /// <summary>
     /// Discover + verify + connect a server (TOFU). See [`Client::connect`].
     /// </summary>
@@ -1290,6 +1412,17 @@ internal interface ISylvaClient {
     /// <exception cref="ClientException"></exception>
     void ForgetServer();
     /// <summary>
+    /// This account's avatar (decrypted), or `None` if unset. Needs the cached
+    /// master key. `Option<Vec<u8>>` maps to a nullable C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    byte[]? GetAvatar();
+    /// <summary>
+    /// This account's profile (for the account-settings screen).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    Profile GetProfile();
+    /// <summary>
     /// This account's active devices.
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1306,6 +1439,12 @@ internal interface ISylvaClient {
     /// <exception cref="ClientException"></exception>
     void RevokeDevice(string @deviceId);
     /// <summary>
+    /// Seal a PNG under the master key and store it server-side (overwrites any
+    /// prior). `Vec<u8>` maps to a C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    void SetAvatar(byte[] @avatar);
+    /// <summary>
     /// Sign in (+ unlock). `secret_key` is the user-entered value on a new
     /// device, or empty/absent to use the keychain-cached one.
     /// </summary>
@@ -1317,6 +1456,17 @@ internal interface ISylvaClient {
     /// </summary>
     /// <exception cref="ClientException"></exception>
     void SignOut();
+    /// <summary>
+    /// Change this account's display name; returns the updated profile.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    Profile UpdateDisplayName(string @displayName);
+    /// <summary>
+    /// Change this account's email (re-auth: current password); returns the
+    /// updated profile.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    Profile UpdateEmail(string @newEmail, string @currentPassword);
 }
 /// <summary>
 /// The shell-facing handle: a blocking wrapper over the async [`Client`] facade
@@ -1421,6 +1571,19 @@ internal class SylvaClient : ISylvaClient, IDisposable {
 
     
     /// <summary>
+    /// Change this account's password (local re-wrap + server verifier update).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public void ChangePassword(string @currentPassword, string @newPassword) {
+        CallWithPointer(thisPtr =>
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_change_password(thisPtr, FfiConverterString.INSTANCE.Lower(@currentPassword), FfiConverterString.INSTANCE.Lower(@newPassword), ref _status)
+));
+    }
+    
+    
+    
+    /// <summary>
     /// Discover + verify + connect a server (TOFU). See [`Client::connect`].
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1471,6 +1634,31 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     
     
     /// <summary>
+    /// This account's avatar (decrypted), or `None` if unset. Needs the cached
+    /// master key. `Option<Vec<u8>>` maps to a nullable C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public byte[]? GetAvatar() {
+        return CallWithPointer(thisPtr => FfiConverterOptionalByteArray.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_get_avatar(thisPtr,  ref _status)
+)));
+    }
+    
+    
+    /// <summary>
+    /// This account's profile (for the account-settings screen).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public Profile GetProfile() {
+        return CallWithPointer(thisPtr => FfiConverterTypeProfile.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_get_profile(thisPtr,  ref _status)
+)));
+    }
+    
+    
+    /// <summary>
     /// This account's active devices.
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1509,6 +1697,20 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     
     
     /// <summary>
+    /// Seal a PNG under the master key and store it server-side (overwrites any
+    /// prior). `Vec<u8>` maps to a C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public void SetAvatar(byte[] @avatar) {
+        CallWithPointer(thisPtr =>
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_set_avatar(thisPtr, FfiConverterByteArray.INSTANCE.Lower(@avatar), ref _status)
+));
+    }
+    
+    
+    
+    /// <summary>
     /// Sign in (+ unlock). `secret_key` is the user-entered value on a new
     /// device, or empty/absent to use the keychain-cached one.
     /// </summary>
@@ -1533,6 +1735,31 @@ internal class SylvaClient : ISylvaClient, IDisposable {
 ));
     }
     
+    
+    
+    /// <summary>
+    /// Change this account's display name; returns the updated profile.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public Profile UpdateDisplayName(string @displayName) {
+        return CallWithPointer(thisPtr => FfiConverterTypeProfile.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_update_display_name(thisPtr, FfiConverterString.INSTANCE.Lower(@displayName), ref _status)
+)));
+    }
+    
+    
+    /// <summary>
+    /// Change this account's email (re-auth: current password); returns the
+    /// updated profile.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public Profile UpdateEmail(string @newEmail, string @currentPassword) {
+        return CallWithPointer(thisPtr => FfiConverterTypeProfile.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_update_email(thisPtr, FfiConverterString.INSTANCE.Lower(@newEmail), FfiConverterString.INSTANCE.Lower(@currentPassword), ref _status)
+)));
+    }
     
     
 
@@ -1686,6 +1913,53 @@ class FfiConverterTypeEnrollment: FfiConverterRustBuffer<Enrollment> {
     public override void Write(Enrollment value, BigEndianStream stream) {
             FfiConverterString.INSTANCE.Write(value.@userId, stream);
             FfiConverterString.INSTANCE.Write(value.@secretKey, stream);
+    }
+}
+
+
+
+/// <summary>
+/// The signed-in user's profile, for the account-settings screen.
+/// </summary>
+/// <param name="instance_role">
+/// `owner` | `admin` | `member`.
+/// </param>
+internal record Profile (
+    string @userId, 
+    string @email, 
+    string @displayName, 
+    /// <summary>
+    /// `owner` | `admin` | `member`.
+    /// </summary>
+    string @instanceRole
+) {
+}
+
+class FfiConverterTypeProfile: FfiConverterRustBuffer<Profile> {
+    public static FfiConverterTypeProfile INSTANCE = new FfiConverterTypeProfile();
+
+    public override Profile Read(BigEndianStream stream) {
+        return new Profile(
+            @userId: FfiConverterString.INSTANCE.Read(stream),
+            @email: FfiConverterString.INSTANCE.Read(stream),
+            @displayName: FfiConverterString.INSTANCE.Read(stream),
+            @instanceRole: FfiConverterString.INSTANCE.Read(stream)
+        );
+    }
+
+    public override int AllocationSize(Profile value) {
+        return 0
+            + FfiConverterString.INSTANCE.AllocationSize(value.@userId)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@email)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@displayName)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@instanceRole);
+    }
+
+    public override void Write(Profile value, BigEndianStream stream) {
+            FfiConverterString.INSTANCE.Write(value.@userId, stream);
+            FfiConverterString.INSTANCE.Write(value.@email, stream);
+            FfiConverterString.INSTANCE.Write(value.@displayName, stream);
+            FfiConverterString.INSTANCE.Write(value.@instanceRole, stream);
     }
 }
 
@@ -1972,6 +2246,37 @@ class FfiConverterOptionalString: FfiConverterRustBuffer<string?> {
         } else {
             stream.WriteByte(1);
             FfiConverterString.INSTANCE.Write((string)value, stream);
+        }
+    }
+}
+
+
+
+
+class FfiConverterOptionalByteArray: FfiConverterRustBuffer<byte[]?> {
+    public static FfiConverterOptionalByteArray INSTANCE = new FfiConverterOptionalByteArray();
+
+    public override byte[]? Read(BigEndianStream stream) {
+        if (stream.ReadByte() == 0) {
+            return null;
+        }
+        return FfiConverterByteArray.INSTANCE.Read(stream);
+    }
+
+    public override int AllocationSize(byte[]? value) {
+        if (value == null) {
+            return 1;
+        } else {
+            return 1 + FfiConverterByteArray.INSTANCE.AllocationSize((byte[])value);
+        }
+    }
+
+    public override void Write(byte[]? value, BigEndianStream stream) {
+        if (value == null) {
+            stream.WriteByte(0);
+        } else {
+            stream.WriteByte(1);
+            FfiConverterByteArray.INSTANCE.Write((byte[])value, stream);
         }
     }
 }

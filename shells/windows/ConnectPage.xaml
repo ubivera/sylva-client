@@ -29,6 +29,12 @@
 
             <InfoBar x:Name="ErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
 
+            <!-- Shown only on an identity mismatch: clears the stale pin so a
+                 legitimately-changed server (e.g. a dev DB recreate) can re-pin. -->
+            <Button x:Name="ForgetButton" Content="Forget pinned server &amp; reconnect"
+                    Visibility="Collapsed" Click="OnForgetAndReconnectClick"
+                    HorizontalAlignment="Stretch" />
+
             <Border x:Name="ResultPanel" Visibility="Collapsed"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
