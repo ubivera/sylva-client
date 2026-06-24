@@ -769,6 +769,10 @@ static class _UniFFILib {
     
     
     
+    
+    
+    
+    
 
     static _UniFFILib() {
         _UniFFILib.uniffiCheckContractApiVersion();
@@ -809,6 +813,10 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_get_avatar(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_get_profile(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
@@ -822,6 +830,10 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_revoke_device(IntPtr @ptr,RustBuffer @deviceId,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_set_avatar(IntPtr @ptr,RustBuffer @avatar,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1085,6 +1097,10 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_get_avatar(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_get_profile(
     );
 
@@ -1098,6 +1114,10 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_revoke_device(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_set_avatar(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1165,6 +1185,12 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_get_avatar();
+            if (checksum != 16069) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_get_avatar` checksum `16069`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_get_profile();
             if (checksum != 28695) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_get_profile` checksum `28695`, library returned `{checksum}`");
@@ -1186,6 +1212,12 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_revoke_device();
             if (checksum != 36160) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_revoke_device` checksum `36160`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_set_avatar();
+            if (checksum != 23085) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_set_avatar` checksum `23085`, library returned `{checksum}`");
             }
         }
         {
@@ -1327,6 +1359,27 @@ class FfiConverterString: FfiConverter<string, RustBuffer> {
 
 
 
+
+class FfiConverterByteArray: FfiConverterRustBuffer<byte[]> {
+    public static FfiConverterByteArray INSTANCE = new FfiConverterByteArray();
+
+    public override byte[] Read(BigEndianStream stream) {
+        var length = stream.ReadInt();
+        return stream.ReadBytes(length);
+    }
+
+    public override int AllocationSize(byte[] value) {
+        return 4 + value.Length;
+    }
+
+    public override void Write(byte[] value, BigEndianStream stream) {
+        stream.WriteInt(value.Length);
+        stream.WriteBytes(value);
+    }
+}
+
+
+
 /// <summary>
 /// The shell-facing handle: a blocking wrapper over the async [`Client`] facade
 /// with its own runtime. Held for the app's lifetime.
@@ -1359,6 +1412,12 @@ internal interface ISylvaClient {
     /// <exception cref="ClientException"></exception>
     void ForgetServer();
     /// <summary>
+    /// This account's avatar (decrypted), or `None` if unset. Needs the cached
+    /// master key. `Option<Vec<u8>>` maps to a nullable C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    byte[]? GetAvatar();
+    /// <summary>
     /// This account's profile (for the account-settings screen).
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1379,6 +1438,12 @@ internal interface ISylvaClient {
     /// </summary>
     /// <exception cref="ClientException"></exception>
     void RevokeDevice(string @deviceId);
+    /// <summary>
+    /// Seal a PNG under the master key and store it server-side (overwrites any
+    /// prior). `Vec<u8>` maps to a C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    void SetAvatar(byte[] @avatar);
     /// <summary>
     /// Sign in (+ unlock). `secret_key` is the user-entered value on a new
     /// device, or empty/absent to use the keychain-cached one.
@@ -1569,6 +1634,19 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     
     
     /// <summary>
+    /// This account's avatar (decrypted), or `None` if unset. Needs the cached
+    /// master key. `Option<Vec<u8>>` maps to a nullable C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public byte[]? GetAvatar() {
+        return CallWithPointer(thisPtr => FfiConverterOptionalByteArray.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_get_avatar(thisPtr,  ref _status)
+)));
+    }
+    
+    
+    /// <summary>
     /// This account's profile (for the account-settings screen).
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1613,6 +1691,20 @@ internal class SylvaClient : ISylvaClient, IDisposable {
         CallWithPointer(thisPtr =>
     _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
     _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_revoke_device(thisPtr, FfiConverterString.INSTANCE.Lower(@deviceId), ref _status)
+));
+    }
+    
+    
+    
+    /// <summary>
+    /// Seal a PNG under the master key and store it server-side (overwrites any
+    /// prior). `Vec<u8>` maps to a C# `byte[]`.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public void SetAvatar(byte[] @avatar) {
+        CallWithPointer(thisPtr =>
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_set_avatar(thisPtr, FfiConverterByteArray.INSTANCE.Lower(@avatar), ref _status)
 ));
     }
     
@@ -2154,6 +2246,37 @@ class FfiConverterOptionalString: FfiConverterRustBuffer<string?> {
         } else {
             stream.WriteByte(1);
             FfiConverterString.INSTANCE.Write((string)value, stream);
+        }
+    }
+}
+
+
+
+
+class FfiConverterOptionalByteArray: FfiConverterRustBuffer<byte[]?> {
+    public static FfiConverterOptionalByteArray INSTANCE = new FfiConverterOptionalByteArray();
+
+    public override byte[]? Read(BigEndianStream stream) {
+        if (stream.ReadByte() == 0) {
+            return null;
+        }
+        return FfiConverterByteArray.INSTANCE.Read(stream);
+    }
+
+    public override int AllocationSize(byte[]? value) {
+        if (value == null) {
+            return 1;
+        } else {
+            return 1 + FfiConverterByteArray.INSTANCE.AllocationSize((byte[])value);
+        }
+    }
+
+    public override void Write(byte[]? value, BigEndianStream stream) {
+        if (value == null) {
+            stream.WriteByte(0);
+        } else {
+            stream.WriteByte(1);
+            FfiConverterByteArray.INSTANCE.Write((byte[])value, stream);
         }
     }
 }

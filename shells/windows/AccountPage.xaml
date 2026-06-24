@@ -34,8 +34,11 @@
                         <TextBlock Text="Avatar" VerticalAlignment="Center" />
                     </StackPanel>
                 </Expander.Header>
-                <TextBlock Text="A generated initials avatar. Uploading a photo is coming soon."
-                           TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <StackPanel Spacing="8">
+                    <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Upload a photo (PNG, JPEG, or WebP). It's cropped to a square, resized to 512×512, and encrypted on this device before it's stored — the server never sees it." />
+                    <Button x:Name="ChoosePhotoButton" Content="Choose photo…" Click="OnChoosePhotoClick" />
+                </StackPanel>
             </Expander>
 
             <!-- Display name -->

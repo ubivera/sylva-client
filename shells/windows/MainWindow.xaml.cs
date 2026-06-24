@@ -21,6 +21,7 @@ namespace Ubivera.Sylva.Client
             AppWindow.Resize(new Windows.Graphics.SizeInt32(930, 540));
 
             App.RootNavFrame = RootFrame;
+            App.MainWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
             _ = StartAsync();
         }
 

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using uniffi.sylva_sdk;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace Ubivera.Sylva.Client
 {
@@ -32,6 +34,53 @@ namespace Ubivera.Sylva.Client
                 CurrentEmailText.Text = $"Current: {profile.email}";
             }
             catch (Exception ex) { ShowError(ex is ClientException c ? Describe(c) : ex.Message); }
+            await LoadAvatarAsync();
+        }
+
+        /// <summary>Decrypt and show the stored avatar; falls back to initials if
+        /// there's none yet (best-effort — never blocks the page).</summary>
+        private async Task LoadAvatarAsync()
+        {
+            try
+            {
+                var bytes = await Task.Run(() => App.Client.GetAvatar());
+                if (bytes is { Length: > 0 })
+                {
+                    Avatar.ProfilePicture = await AvatarImaging.FromBytesAsync(bytes);
+                }
+            }
+            catch { /* no avatar / not decryptable here — initials stay */ }
+        }
+
+        private async void OnChoosePhotoClick(object sender, RoutedEventArgs e)
+        {
+            var picker = new FileOpenPicker { SuggestedStartLocation = PickerLocationId.PicturesLibrary };
+            picker.FileTypeFilter.Add(".png");
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".webp");
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, App.MainWindowHandle);
+
+            var file = await picker.PickSingleFileAsync();
+            if (file is null) { return; }
+
+            StatusBar.IsOpen = false;
+            ChoosePhotoButton.IsEnabled = false;
+            try
+            {
+                byte[] png;
+                using (var stream = await file.OpenAsync(FileAccessMode.Read))
+                {
+                    png = await AvatarImaging.NormalizeToPngAsync(stream, 512);
+                }
+                await Task.Run(() => App.Client.SetAvatar(png));
+                Avatar.ProfilePicture = await AvatarImaging.FromBytesAsync(png);
+                App.NotifyAvatarChanged();
+                ShowSuccess("Avatar updated.");
+            }
+            catch (ClientException ex) { ShowError(Describe(ex)); }
+            catch (Exception ex) { ShowError(ex.Message); }
+            finally { ChoosePhotoButton.IsEnabled = true; }
         }
 
         private async void OnSaveNameClick(object sender, RoutedEventArgs e)

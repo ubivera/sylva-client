@@ -30,6 +30,23 @@ namespace Ubivera.Sylva.Client
             // just the avatar, centered like the nav icons above it.
             UpdateFooterPane();
             Nav.RegisterPropertyChangedCallback(NavigationView.IsPaneOpenProperty, (_, _) => UpdateFooterPane());
+
+            // Keep the footer avatar in sync when it's changed on the Account page.
+            App.AvatarChanged += OnAvatarChanged;
+            Unloaded += (_, _) => App.AvatarChanged -= OnAvatarChanged;
+        }
+
+        private async void OnAvatarChanged() => await RefreshFooterAvatarAsync();
+
+        private async Task RefreshFooterAvatarAsync()
+        {
+            try
+            {
+                var bytes = await Task.Run(() => App.Client.GetAvatar());
+                FooterAvatar.ProfilePicture =
+                    bytes is { Length: > 0 } ? await AvatarImaging.FromBytesAsync(bytes) : null;
+            }
+            catch { /* best-effort chrome; initials stay */ }
         }
 
         private void UpdateFooterPane()
