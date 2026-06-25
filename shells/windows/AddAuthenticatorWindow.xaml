@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Ubivera.Sylva.Client.AddAuthenticatorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ubivera.Sylva.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Add authenticator">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <!-- Row 0 is the custom (extended) title bar with the app logo, matching the
+         main window; row 1 holds the content. The window is sized to the content
+         in code-behind, so there's no dead space. -->
+    <Grid RowDefinitions="Auto,*">
+        <Grid x:Name="AppTitleBar" Grid.Row="0" Height="40" ColumnDefinitions="Auto,Auto">
+            <Image Grid.Column="0" Source="ms-appx:///Assets/Square44x44Logo.scale-200.png"
+                   Width="18" Height="18" Margin="14,0,0,0" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1" Text="Add authenticator" Margin="10,0,0,0" VerticalAlignment="Center"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="Body" Spacing="14" Padding="24,8,24,24">
+                <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Scan this with your authenticator app, then enter the 6-digit code it shows." />
+                <Image x:Name="QrImage" Width="200" Height="200" HorizontalAlignment="Center" />
+                <TextBlock Text="Or enter this key manually:" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBox x:Name="SecretBox" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" />
+                <TextBox x:Name="LabelBox" Header="Name (e.g. Phone)" />
+                <TextBox x:Name="CodeBox" Header="6-digit code" MaxLength="6" />
+                <InfoBar x:Name="ErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                    <Button x:Name="CancelButton" Content="Cancel" Click="OnCancelClick" />
+                    <Button x:Name="VerifyButton" Content="Verify &amp; add"
+                            Style="{StaticResource AccentButtonStyle}" Click="OnVerifyClick" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -773,6 +773,16 @@ static class _UniFFILib {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     static _UniFFILib() {
         _UniFFILib.uniffiCheckContractApiVersion();
@@ -797,6 +807,10 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_confirm_totp(IntPtr @ptr,RustBuffer @totpId,RustBuffer @code,RustBuffer @label,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_connect(IntPtr @ptr,RustBuffer @host,ushort @discoveryPort,ref UniffiRustCallStatus _uniffi_out_err
     );
 
@@ -806,6 +820,10 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_enroll_this_device(IntPtr @ptr,RustBuffer @label,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_enroll_totp(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -822,6 +840,14 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_list_devices(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_list_totp(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_remove_totp(IntPtr @ptr,RustBuffer @totpId,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -842,6 +868,10 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern void uniffi_sylva_sdk_fn_method_sylvaclient_sign_out(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_sylva_sdk_fn_method_sylvaclient_submit_mfa(IntPtr @ptr,RustBuffer @code,ref UniffiRustCallStatus _uniffi_out_err
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1081,6 +1111,10 @@ static class _UniFFILib {
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_confirm_totp(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_connect(
     );
 
@@ -1090,6 +1124,10 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_enroll_this_device(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_enroll_totp(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1106,6 +1144,14 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_list_totp(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_remove_totp(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1126,6 +1172,10 @@ static class _UniFFILib {
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out(
+    );
+
+    [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_sylva_sdk_checksum_method_sylvaclient_submit_mfa(
     );
 
     [DllImport("sylva_sdk", CallingConvention = CallingConvention.Cdecl)]
@@ -1161,6 +1211,12 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_confirm_totp();
+            if (checksum != 30186) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_confirm_totp` checksum `30186`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_connect();
             if (checksum != 16991) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_connect` checksum `16991`, library returned `{checksum}`");
@@ -1176,6 +1232,12 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_enroll_this_device();
             if (checksum != 17119) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_enroll_this_device` checksum `17119`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_enroll_totp();
+            if (checksum != 14478) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_enroll_totp` checksum `14478`, library returned `{checksum}`");
             }
         }
         {
@@ -1200,6 +1262,18 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices();
             if (checksum != 36386) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_list_devices` checksum `36386`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_list_totp();
+            if (checksum != 45259) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_list_totp` checksum `45259`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_remove_totp();
+            if (checksum != 61773) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_remove_totp` checksum `61773`, library returned `{checksum}`");
             }
         }
         {
@@ -1230,6 +1304,12 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out();
             if (checksum != 6896) {
                 throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_sign_out` checksum `6896`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_sylva_sdk_checksum_method_sylvaclient_submit_mfa();
+            if (checksum != 35537) {
+                throw new UniffiContractChecksumException($"uniffi.sylva_sdk: uniffi bindings expected function `uniffi_sylva_sdk_checksum_method_sylvaclient_submit_mfa` checksum `35537`, library returned `{checksum}`");
             }
         }
         {
@@ -1391,6 +1471,12 @@ internal interface ISylvaClient {
     /// <exception cref="ClientException"></exception>
     void ChangePassword(string @currentPassword, string @newPassword);
     /// <summary>
+    /// Confirm a pending TOTP enrollment with a current code. A wrong code maps
+    /// to `InvalidCode`; an empty `label` defaults server-side.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    void ConfirmTotp(string @totpId, string @code, string @label);
+    /// <summary>
     /// Discover + verify + connect a server (TOFU). See [`Client::connect`].
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1405,6 +1491,12 @@ internal interface ISylvaClient {
     /// </summary>
     /// <exception cref="ClientException"></exception>
     DeviceInfo EnrollThisDevice(string @label);
+    /// <summary>
+    /// Begin enrolling a TOTP authenticator. Returns the id + base32 secret +
+    /// `otpauth://` URI (render as a QR code); confirm a code to activate it.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    TotpEnrollment EnrollTotp();
     /// <summary>
     /// Forget this server entirely — full wipe; re-enroll (Secret Key) to return
     /// (see [`Client::forget_server`]).
@@ -1427,6 +1519,16 @@ internal interface ISylvaClient {
     /// </summary>
     /// <exception cref="ClientException"></exception>
     List<DeviceInfo> ListDevices();
+    /// <summary>
+    /// This account's verified TOTP authenticators (for the security screen).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    List<TotpFactor> ListTotp();
+    /// <summary>
+    /// Remove one of this account's TOTP authenticators.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    void RemoveTotp(string @totpId);
     /// <summary>
     /// Auto-resume a prior session on launch (see [`Client::restore`]). Returns the
     /// user id if resumed, else `None` (the shell then shows Connect).
@@ -1456,6 +1558,13 @@ internal interface ISylvaClient {
     /// </summary>
     /// <exception cref="ClientException"></exception>
     void SignOut();
+    /// <summary>
+    /// Complete a sign-in that returned `MfaRequired` by submitting the user's
+    /// TOTP `code`. A wrong code returns `InvalidCode` and the pending sign-in is
+    /// kept so the user can retry.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    SignInOutcome SubmitMfa(string @code);
     /// <summary>
     /// Change this account's display name; returns the updated profile.
     /// </summary>
@@ -1584,6 +1693,20 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     
     
     /// <summary>
+    /// Confirm a pending TOTP enrollment with a current code. A wrong code maps
+    /// to `InvalidCode`; an empty `label` defaults server-side.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public void ConfirmTotp(string @totpId, string @code, string @label) {
+        CallWithPointer(thisPtr =>
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_confirm_totp(thisPtr, FfiConverterString.INSTANCE.Lower(@totpId), FfiConverterString.INSTANCE.Lower(@code), FfiConverterString.INSTANCE.Lower(@label), ref _status)
+));
+    }
+    
+    
+    
+    /// <summary>
     /// Discover + verify + connect a server (TOFU). See [`Client::connect`].
     /// </summary>
     /// <exception cref="ClientException"></exception>
@@ -1615,6 +1738,19 @@ internal class SylvaClient : ISylvaClient, IDisposable {
         return CallWithPointer(thisPtr => FfiConverterTypeDeviceInfo.INSTANCE.Lift(
     _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
     _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_enroll_this_device(thisPtr, FfiConverterString.INSTANCE.Lower(@label), ref _status)
+)));
+    }
+    
+    
+    /// <summary>
+    /// Begin enrolling a TOTP authenticator. Returns the id + base32 secret +
+    /// `otpauth://` URI (render as a QR code); confirm a code to activate it.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public TotpEnrollment EnrollTotp() {
+        return CallWithPointer(thisPtr => FfiConverterTypeTotpEnrollment.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_enroll_totp(thisPtr,  ref _status)
 )));
     }
     
@@ -1668,6 +1804,31 @@ internal class SylvaClient : ISylvaClient, IDisposable {
     _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_list_devices(thisPtr,  ref _status)
 )));
     }
+    
+    
+    /// <summary>
+    /// This account's verified TOTP authenticators (for the security screen).
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public List<TotpFactor> ListTotp() {
+        return CallWithPointer(thisPtr => FfiConverterSequenceTypeTotpFactor.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_list_totp(thisPtr,  ref _status)
+)));
+    }
+    
+    
+    /// <summary>
+    /// Remove one of this account's TOTP authenticators.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public void RemoveTotp(string @totpId) {
+        CallWithPointer(thisPtr =>
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_remove_totp(thisPtr, FfiConverterString.INSTANCE.Lower(@totpId), ref _status)
+));
+    }
+    
     
     
     /// <summary>
@@ -1735,6 +1896,20 @@ internal class SylvaClient : ISylvaClient, IDisposable {
 ));
     }
     
+    
+    
+    /// <summary>
+    /// Complete a sign-in that returned `MfaRequired` by submitting the user's
+    /// TOTP `code`. A wrong code returns `InvalidCode` and the pending sign-in is
+    /// kept so the user can retry.
+    /// </summary>
+    /// <exception cref="ClientException"></exception>
+    public SignInOutcome SubmitMfa(string @code) {
+        return CallWithPointer(thisPtr => FfiConverterTypeSignInOutcome.INSTANCE.Lift(
+    _UniffiHelpers.RustCallWithError(FfiConverterTypeClientError.INSTANCE, (ref UniffiRustCallStatus _status) =>
+    _UniFFILib.uniffi_sylva_sdk_fn_method_sylvaclient_submit_mfa(thisPtr, FfiConverterString.INSTANCE.Lower(@code), ref _status)
+)));
+    }
     
     
     /// <summary>
@@ -1965,6 +2140,91 @@ class FfiConverterTypeProfile: FfiConverterRustBuffer<Profile> {
 
 
 
+/// <summary>
+/// A freshly started TOTP enrollment: show `otpauth_uri` as a QR code (or
+/// `secret_base32` for manual entry), then confirm a code to activate it.
+/// </summary>
+internal record TotpEnrollment (
+    string @totpId, 
+    string @secretBase32, 
+    string @otpauthUri
+) {
+}
+
+class FfiConverterTypeTotpEnrollment: FfiConverterRustBuffer<TotpEnrollment> {
+    public static FfiConverterTypeTotpEnrollment INSTANCE = new FfiConverterTypeTotpEnrollment();
+
+    public override TotpEnrollment Read(BigEndianStream stream) {
+        return new TotpEnrollment(
+            @totpId: FfiConverterString.INSTANCE.Read(stream),
+            @secretBase32: FfiConverterString.INSTANCE.Read(stream),
+            @otpauthUri: FfiConverterString.INSTANCE.Read(stream)
+        );
+    }
+
+    public override int AllocationSize(TotpEnrollment value) {
+        return 0
+            + FfiConverterString.INSTANCE.AllocationSize(value.@totpId)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@secretBase32)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@otpauthUri);
+    }
+
+    public override void Write(TotpEnrollment value, BigEndianStream stream) {
+            FfiConverterString.INSTANCE.Write(value.@totpId, stream);
+            FfiConverterString.INSTANCE.Write(value.@secretBase32, stream);
+            FfiConverterString.INSTANCE.Write(value.@otpauthUri, stream);
+    }
+}
+
+
+
+/// <summary>
+/// A verified TOTP authenticator row for the security screen.
+/// </summary>
+/// <param name="last_used_at">
+/// RFC 3339, or empty if the authenticator has never completed a sign-in.
+/// </param>
+internal record TotpFactor (
+    string @totpId, 
+    string @label, 
+    string @createdAt, 
+    /// <summary>
+    /// RFC 3339, or empty if the authenticator has never completed a sign-in.
+    /// </summary>
+    string @lastUsedAt
+) {
+}
+
+class FfiConverterTypeTotpFactor: FfiConverterRustBuffer<TotpFactor> {
+    public static FfiConverterTypeTotpFactor INSTANCE = new FfiConverterTypeTotpFactor();
+
+    public override TotpFactor Read(BigEndianStream stream) {
+        return new TotpFactor(
+            @totpId: FfiConverterString.INSTANCE.Read(stream),
+            @label: FfiConverterString.INSTANCE.Read(stream),
+            @createdAt: FfiConverterString.INSTANCE.Read(stream),
+            @lastUsedAt: FfiConverterString.INSTANCE.Read(stream)
+        );
+    }
+
+    public override int AllocationSize(TotpFactor value) {
+        return 0
+            + FfiConverterString.INSTANCE.AllocationSize(value.@totpId)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@label)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@createdAt)
+            + FfiConverterString.INSTANCE.AllocationSize(value.@lastUsedAt);
+    }
+
+    public override void Write(TotpFactor value, BigEndianStream stream) {
+            FfiConverterString.INSTANCE.Write(value.@totpId, stream);
+            FfiConverterString.INSTANCE.Write(value.@label, stream);
+            FfiConverterString.INSTANCE.Write(value.@createdAt, stream);
+            FfiConverterString.INSTANCE.Write(value.@lastUsedAt, stream);
+    }
+}
+
+
+
 
 
 /// <summary>
@@ -2007,6 +2267,11 @@ internal class ClientException: UniffiException {
     }
     
     
+    public class InvalidCode : ClientException {
+        public InvalidCode() : base() {}
+    }
+    
+    
     public class Storage : ClientException {
         public Storage() : base() {}
     }
@@ -2040,8 +2305,10 @@ class FfiConverterTypeClientError : FfiConverterRustBuffer<ClientException>, Cal
             case 6:
                 return new ClientException.SecretKeyRequired();
             case 7:
-                return new ClientException.Storage();
+                return new ClientException.InvalidCode();
             case 8:
+                return new ClientException.Storage();
+            case 9:
                 return new ClientException.Server();
             default:
                 throw new InternalException(String.Format("invalid error value '{0}' in FfiConverterTypeClientError.Read()", value));
@@ -2067,6 +2334,9 @@ class FfiConverterTypeClientError : FfiConverterRustBuffer<ClientException>, Cal
                 return 4;
 
             case ClientException.SecretKeyRequired variant_value:
+                return 4;
+
+            case ClientException.InvalidCode variant_value:
                 return 4;
 
             case ClientException.Storage variant_value:
@@ -2099,11 +2369,14 @@ class FfiConverterTypeClientError : FfiConverterRustBuffer<ClientException>, Cal
             case ClientException.SecretKeyRequired variant_value:
                 stream.WriteInt(6);
                 break;
-            case ClientException.Storage variant_value:
+            case ClientException.InvalidCode variant_value:
                 stream.WriteInt(7);
                 break;
-            case ClientException.Server variant_value:
+            case ClientException.Storage variant_value:
                 stream.WriteInt(8);
+                break;
+            case ClientException.Server variant_value:
+                stream.WriteInt(9);
                 break;
             default:
                 throw new InternalException(String.Format("invalid error value '{0}' in FfiConverterTypeClientError.Write()", value));
@@ -2319,6 +2592,48 @@ class FfiConverterSequenceTypeDeviceInfo: FfiConverterRustBuffer<List<DeviceInfo
 
         stream.WriteInt(value.Count);
         var writerFn = FfiConverterTypeDeviceInfo.INSTANCE.Write;
+        value.ForEach(item => writerFn(item, stream));
+    }
+}
+
+
+
+
+class FfiConverterSequenceTypeTotpFactor: FfiConverterRustBuffer<List<TotpFactor>> {
+    public static FfiConverterSequenceTypeTotpFactor INSTANCE = new FfiConverterSequenceTypeTotpFactor();
+
+    public override List<TotpFactor> Read(BigEndianStream stream) {
+        var length = stream.ReadInt();
+        var result = new List<TotpFactor>(length);
+        var readFn = FfiConverterTypeTotpFactor.INSTANCE.Read;
+        for (int i = 0; i < length; i++) {
+            result.Add(readFn(stream));
+        }
+        return result;
+    }
+
+    public override int AllocationSize(List<TotpFactor> value) {
+        var sizeForLength = 4;
+
+        // details/1-empty-list-as-default-method-parameter.md
+        if (value == null) {
+            return sizeForLength;
+        }
+
+        var allocationSizeFn = FfiConverterTypeTotpFactor.INSTANCE.AllocationSize;
+        var sizeForItems = value.Sum(item => allocationSizeFn(item));
+        return sizeForLength + sizeForItems;
+    }
+
+    public override void Write(List<TotpFactor> value, BigEndianStream stream) {
+        // details/1-empty-list-as-default-method-parameter.md
+        if (value == null) {
+            stream.WriteInt(0);
+            return;
+        }
+
+        stream.WriteInt(value.Count);
+        var writerFn = FfiConverterTypeTotpFactor.INSTANCE.Write;
         value.ForEach(item => writerFn(item, stream));
     }
 }

@@ -85,6 +85,7 @@ namespace Ubivera.Sylva.Client
                 // Footer identity is best-effort chrome; the Account page surfaces
                 // real profile/load errors.
             }
+            await RefreshFooterAvatarAsync();
         }
 
         private void OnNavSelectionChanged(

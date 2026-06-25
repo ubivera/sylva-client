@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,9 +17,12 @@ namespace Ubivera.Sylva.Client
     /// </summary>
     public sealed partial class AccountPage : Page
     {
+        private readonly ObservableCollection<AuthenticatorVm> _authenticators = new();
+
         public AccountPage()
         {
             InitializeComponent();
+            TotpList.ItemsSource = _authenticators;
             Loaded += (_, _) => _ = LoadAsync();
         }
 
@@ -35,6 +39,7 @@ namespace Ubivera.Sylva.Client
             }
             catch (Exception ex) { ShowError(ex is ClientException c ? Describe(c) : ex.Message); }
             await LoadAvatarAsync();
+            await RefreshTotpAsync();
         }
 
         /// <summary>Decrypt and show the stored avatar; falls back to initials if
@@ -133,6 +138,67 @@ namespace Ubivera.Sylva.Client
             }
         }
 
+        // ── Two-step verification (TOTP) ────────────────────────────────────────
+
+        private async Task RefreshTotpAsync()
+        {
+            try
+            {
+                var factors = await Task.Run(() => App.Client.ListTotp());
+                _authenticators.Clear();
+                foreach (var f in factors)
+                {
+                    var label = string.IsNullOrWhiteSpace(f.label) ? "Authenticator" : f.label;
+                    _authenticators.Add(new AuthenticatorVm(f.totpId, label, FormatAdded(f.createdAt)));
+                }
+                NoTotpText.Visibility = _authenticators.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch { /* leave the list as-is — the rest of the page still works */ }
+        }
+
+        private async void OnAddTotpClick(object sender, RoutedEventArgs e)
+        {
+            StatusBar.IsOpen = false;
+            TotpEnrollment enrollment;
+            try { enrollment = await Task.Run(() => App.Client.EnrollTotp()); }
+            catch (ClientException ex) { ShowError(Describe(ex)); return; }
+            catch (Exception ex) { ShowError(ex.Message); return; }
+
+            var window = new AddAuthenticatorWindow(enrollment);
+            window.Activate();
+            if (await window.Completed)
+            {
+                ShowSuccess("Authenticator added.");
+                await RefreshTotpAsync();
+            }
+        }
+
+        private async void OnRemoveTotpClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button || button.Tag is not string totpId) { return; }
+            var confirm = new ContentDialog
+            {
+                XamlRoot = XamlRoot,
+                Title = "Remove authenticator?",
+                Content = "You won't be able to use this app for sign-in codes anymore.",
+                PrimaryButtonText = "Remove",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Close,
+            };
+            if (await confirm.ShowAsync() != ContentDialogResult.Primary) { return; }
+            try
+            {
+                await Task.Run(() => App.Client.RemoveTotp(totpId));
+                ShowSuccess("Authenticator removed.");
+                await RefreshTotpAsync();
+            }
+            catch (ClientException ex) { ShowError(Describe(ex)); }
+            catch (Exception ex) { ShowError(ex.Message); }
+        }
+
+        private static string FormatAdded(string rfc3339) =>
+            DateTimeOffset.TryParse(rfc3339, out var dt) ? $"Added {dt.LocalDateTime:d}" : "Added";
+
         /// <summary>Run a profile-returning SDK call off the UI thread; report result.
         /// Returns the updated profile on success, else null.</summary>
         private async Task<Profile?> Run(Button button, Func<Profile> call, string success)
@@ -188,4 +254,7 @@ namespace Ubivera.Sylva.Client
             _ => "The server couldn't complete that (the email may already be in use).",
         };
     }
+
+    /// <summary>Row VM for the authenticator list (clean PascalCase for x:Bind).</summary>
+    internal sealed record AuthenticatorVm(string Id, string Label, string Added);
 }

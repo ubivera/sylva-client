@@ -25,6 +25,18 @@
                 <InfoBar x:Name="ErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
             </StackPanel>
 
+            <!-- Second-factor step, shown when sign-in returns MfaRequired. -->
+            <StackPanel x:Name="MfaPanel" Spacing="16" Visibility="Collapsed">
+                <TextBlock Text="Two-step verification" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock Text="Enter the 6-digit code from your authenticator app."
+                           TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBox x:Name="MfaCodeBox" Header="Code" MaxLength="6" />
+                <Button x:Name="VerifyButton" Content="Verify" Style="{StaticResource AccentButtonStyle}"
+                        Click="OnVerifyMfaClick" HorizontalAlignment="Stretch" />
+                <ProgressRing x:Name="MfaBusy" IsActive="False" HorizontalAlignment="Center" />
+                <InfoBar x:Name="MfaErrorBar" Severity="Error" IsOpen="False" IsClosable="True" />
+            </StackPanel>
+
             <InfoBar x:Name="SuccessBar" Severity="Success" IsOpen="False" IsClosable="False" Title="Signed in" />
         </StackPanel>
     </Grid>

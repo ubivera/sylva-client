@@ -86,6 +86,37 @@
                     <Button x:Name="ChangePwButton" Content="Change password" Click="OnChangePasswordClick" />
                 </StackPanel>
             </Expander>
+
+            <!-- Two-step verification (TOTP authenticators) -->
+            <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="14">
+                        <FontIcon Glyph="&#xE8D7;" />
+                        <TextBlock Text="Two-step verification" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Expander.Header>
+                <StackPanel Spacing="8">
+                    <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Require a one-time code from an authenticator app when signing in on a new device. You can add more than one app." />
+                    <ItemsControl x:Name="TotpList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:AuthenticatorVm">
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                    <StackPanel>
+                                        <TextBlock Text="{x:Bind Label}" />
+                                        <TextBlock Text="{x:Bind Added}" Style="{StaticResource CaptionTextBlockStyle}"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    </StackPanel>
+                                    <Button Grid.Column="1" Content="Remove" Tag="{x:Bind Id}" Click="OnRemoveTotpClick" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="NoTotpText" Text="No authenticators yet."
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <Button x:Name="AddTotpButton" Content="Add authenticator…" Click="OnAddTotpClick" />
+                </StackPanel>
+            </Expander>
             </StackPanel>
         </Grid>
     </ScrollViewer>

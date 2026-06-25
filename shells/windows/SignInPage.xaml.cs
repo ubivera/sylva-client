@@ -38,14 +38,36 @@ namespace Ubivera.Sylva.Client
                 {
                     Frame.Navigate(typeof(ShellPage));
                 }
-                else // MfaRequired — the only other variant
+                else // MfaRequired — swap to the second-factor step
                 {
-                    ShowError("This account needs a second factor; MFA isn't supported in this build yet.");
+                    FormPanel.Visibility = Visibility.Collapsed;
+                    MfaPanel.Visibility = Visibility.Visible;
+                    MfaCodeBox.Focus(FocusState.Programmatic);
                 }
             }
             catch (ClientException ex) { ShowError(Describe(ex)); }
             catch (Exception ex) { ShowError(ex.Message); }
             finally { SetBusy(false); }
+        }
+
+        private async void OnVerifyMfaClick(object sender, RoutedEventArgs e)
+        {
+            var code = MfaCodeBox.Text.Trim();
+            if (code.Length == 0) { ShowMfaError("Enter the code from your authenticator."); return; }
+
+            MfaErrorBar.IsOpen = false;
+            SetMfaBusy(true);
+            try
+            {
+                var outcome = await Task.Run(() => App.Client.SubmitMfa(code));
+                if (outcome is SignInOutcome.Success)
+                {
+                    Frame.Navigate(typeof(ShellPage));
+                }
+            }
+            catch (ClientException ex) { ShowMfaError(DescribeMfa(ex)); MfaCodeBox.SelectAll(); }
+            catch (Exception ex) { ShowMfaError(ex.Message); }
+            finally { SetMfaBusy(false); }
         }
 
         private void ShowError(string message)
@@ -54,6 +76,25 @@ namespace Ubivera.Sylva.Client
             ErrorBar.Message = message;
             ErrorBar.IsOpen = true;
         }
+
+        private void ShowMfaError(string message)
+        {
+            MfaErrorBar.Title = "Couldn't verify";
+            MfaErrorBar.Message = message;
+            MfaErrorBar.IsOpen = true;
+        }
+
+        private void SetMfaBusy(bool busy)
+        {
+            MfaBusy.IsActive = busy;
+            VerifyButton.IsEnabled = !busy;
+        }
+
+        private static string DescribeMfa(ClientException ex) => ex switch
+        {
+            ClientException.InvalidCode => "That code didn't match. Use the current code from your app.",
+            _ => "Couldn't verify the code. Try again.",
+        };
 
         private void SetBusy(bool busy)
         {
